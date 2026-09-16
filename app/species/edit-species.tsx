@@ -311,7 +311,7 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
             </form>
           </Form>
         )}
-        // if the userSpecies array is empty, display this message to the user
+        {/* if the userSpecies array is empty, display this message to the user */}
         {userSpecies.length === 0 && (
           <p className="text-sm text-muted-foreground">You haven&apos;t added any species yet.</p>
         )}
