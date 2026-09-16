@@ -18,17 +18,21 @@ export default async function SpeciesList() {
     redirect("/");
   }
 
-  // Obtain the ID of the currently signed-in user
+  // obtain the ID of the currently signed-in user
   const sessionId = session.user.id;
 
   const { data: species } = await supabase.from("species").select("*").order("id", { ascending: false });
+
+  // obtain an array of the species authored by the currently signed-in user
+  // this array is later passed down as a prop to EditSpecies
+  const userSpecies = species?.filter((s) => s.author === sessionId) ?? [];
 
   return (
     <>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
         <TypographyH2>Species List</TypographyH2>
         <div className="flex gap-4">
-          <EditSpecies userId={sessionId} />
+          <EditSpecies userSpecies={userSpecies} />
           <AddSpeciesDialog userId={sessionId} />
         </div>
       </div>
