@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from "@/lib/server-utils";
 import { redirect } from "next/navigation";
 import AddSpeciesDialog from "./add-species-dialog";
 import SpeciesCard from "./species-card";
+import EditSpecies from "./edit-species";
 
 export default async function SpeciesList() {
   // Create supabase server component client and obtain user session from stored cookie
