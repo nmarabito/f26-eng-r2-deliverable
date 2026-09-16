@@ -45,9 +45,9 @@ export default function SpeciesCard({ species }: { species: Species }) {
             <DialogTitle>{species.scientific_name}</DialogTitle>
             <DialogDescription>{species.common_name}</DialogDescription>
           </DialogHeader>
-          <p>{species.description}</p>
           <p>Total Population: {species.total_population}</p>
-          <p>Kingdom: {species.kingdom</p>
+          <p>Kingdom: {species.kingdom}</p>
+          <p>{species.description}</p>
           <DialogClose asChild>
             <Button className="mt-3 w-full">Close</Button>
           </DialogClose>
