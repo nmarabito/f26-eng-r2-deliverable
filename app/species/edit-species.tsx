@@ -69,14 +69,15 @@ const defaultValues: Partial<FormData> = {
   description: null,
 };
 
-// Functionality for users to edit the information of species they have authored
+// functionality for users to edit the information of species they have authored
+// (the userSpecies prop comes from species/page.tsx)
 export default function EditSpecies({ userSpecies }: { userSpecies: Species[] }) {
   const router = useRouter();
 
-  // Control open/closed state of the dialog
+  // control open/closed state of the dialog
   const [open, setOpen] = useState<boolean>(false);
 
-  // Track which of the user's species is currently selected for editing
+  // track which of the user's species is currently selected for editing
   const [selectedId, setSelectedId] = useState<string>("");
   const selectedSpecies = userSpecies.find((species) => species.id.toString() === selectedId);
 
@@ -89,6 +90,8 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
   const handleSelectSpecies = (value: string) => {
     setSelectedId(value);
     const species = userSpecies.find((s) => s.id.toString() === value);
+    
+    // fill the form with the existing data for the selected species so that user can update it
     if (species) {
       form.reset({
         scientific_name: species.scientific_name,
@@ -110,6 +113,7 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
       });
     }
 
+    // update any fields that have been changed
     const supabase = createBrowserSupabaseClient();
     const { error } = await supabase
       .from("species")
@@ -135,7 +139,7 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
     setSelectedId("");
     form.reset(defaultValues);
 
-    // Refresh the server-rendered species list to display the edited species
+    // refresh the server-rendered species list to display the edited species
     router.refresh();
 
     return toast({
@@ -144,6 +148,7 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
     });
   };
 
+  // modeled on the AddSpeciesDialog component
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -320,7 +325,9 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
   );
 }
 
-//📝 **Add the functionality for users to edit a species’ information.**
+// INSTRUCTIONS FROM NOTION
+
+// 📝 **Add the functionality for users to edit a species’ information.**
 
 //Right now, there is no functionality for users to edit an existing species’ information.
 //  Implement functionality that allows users to edit information of 

@@ -1,9 +1,9 @@
 import { env } from "@/env.mjs";
 import OpenAI from "openai";
 
-export const SPECIES_CHAT_FALLBACK = "Sorry, I could not process that question.";
+export const SPECIES_CHAT_FAILURE_MESSAGE = "Sorry, I could not process that question.";
 
-// initialize the client outside the function
+// initialize the client outside the function definition
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
 export async function generateResponse(message: string): Promise<string> {
@@ -21,8 +21,8 @@ export async function generateResponse(message: string): Promise<string> {
     });
 
     const response = completion.choices[0]?.message.content?.trim();
-    return response ? response : SPECIES_CHAT_FALLBACK;
+    return response ? response : SPECIES_CHAT_FAILURE_MESSAGE;
   } catch {
-    return SPECIES_CHAT_FALLBACK;
+    return SPECIES_CHAT_FAILURE_MESSAGE;
   }
 }

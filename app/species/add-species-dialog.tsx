@@ -97,7 +97,7 @@ export default function AddSpeciesDialog({ userId }: { userId: string }) {
       return;
     }
 
-    // "await" syntax as suggested in the Hints
+    // fetch the Wikipedia summary for a title using the REST API
     const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
 
     if (!response.ok) {
@@ -110,6 +110,7 @@ export default function AddSpeciesDialog({ userId }: { userId: string }) {
 
     const data = (await response.json()) as { extract?: string; thumbnail?: { source?: string } };
 
+    // update the description and image fields
     form.setValue("description", data.extract ?? null);
     form.setValue("image", data.thumbnail?.source ?? null);
   };

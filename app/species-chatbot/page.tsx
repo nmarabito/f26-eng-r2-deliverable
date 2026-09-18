@@ -18,7 +18,11 @@ export default function SpeciesChatbot() {
   };
 
   const handleSubmit = async () => {
+
+    // remove whitespace
     const trimmedMessage = message.trim();
+
+    // if empty message or chatbot is already answering a previous question, don't generate a new response
     if (!trimmedMessage || isLoading) {
       return;
     }
@@ -90,7 +94,7 @@ export default function SpeciesChatbot() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onInput={handleInput}
-            disabled={isLoading}
+            disabled={isLoading} {/* don't allow inputs while the chatbot is generating a response */}
             rows={1}
             placeholder="Ask about a species..."
             className="w-full resize-none overflow-hidden rounded border border-border bg-background p-2 text-sm text-foreground focus:outline-none"
@@ -101,7 +105,7 @@ export default function SpeciesChatbot() {
             disabled={isLoading || !message.trim()}
             className="mt-2 rounded bg-primary px-4 py-2 text-background transition hover:opacity-90"
           >
-            {isLoading ? "Thinking..." : "Enter"}
+            {isLoading ? "Thinking..." : "Enter"} {/* this discourages users from asking new questions while chatbot is generating a response to a previous one */}
           </button>
         </div>
       </div>

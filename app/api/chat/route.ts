@@ -10,6 +10,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Request body must be valid JSON." }, { status: 400 });
   }
 
+  // check for many cases where the request body might be invalid
   if (
     typeof body !== "object" ||
     body === null ||
