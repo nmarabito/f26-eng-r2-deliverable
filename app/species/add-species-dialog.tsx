@@ -80,12 +80,39 @@ export default function AddSpeciesDialog({ userId }: { userId: string }) {
   // Control open/closed state of the dialog
   const [open, setOpen] = useState<boolean>(false);
 
+  // controls the Wikipedia search field
+  const [wikiSearch, setWikiSearch] = useState<string>("");
+
   // Instantiate form functionality with React Hook Form, passing in the Zod schema (for validation) and default values
   const form = useForm<FormData>({
     resolver: zodResolver(speciesSchema),
     defaultValues,
     mode: "onChange",
   });
+
+  // function to search Wikipedia in order to autofill
+  const searchWikipedia = async () => {
+    const title = wikiSearch.trim();
+    if (!title) {
+      return;
+    }
+
+    // "await" syntax as suggested in the Hints
+    const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+
+    if (!response.ok) {
+      return toast({
+        title: "No Wikipedia article found",
+        description: `We couldn't find a Wikipedia article for "${title}".`,
+        variant: "destructive",
+      });
+    }
+
+    const data = (await response.json()) as { extract?: string; thumbnail?: { source?: string } };
+
+    form.setValue("description", data.extract ?? null);
+    form.setValue("image", data.thumbnail?.source ?? null);
+  };
 
   const onSubmit = async (input: FormData) => {
     // The `input` prop contains data that has already been processed by zod. We can now use it in a supabase query
@@ -147,6 +174,20 @@ export default function AddSpeciesDialog({ userId }: { userId: string }) {
         <Form {...form}>
           <form onSubmit={(e: BaseSyntheticEvent) => void form.handleSubmit(onSubmit)(e)}>
             <div className="grid w-full items-center gap-4">
+              <FormItem>
+                <FormLabel>Search Wikipedia for your species.</FormLabel>
+                <div className="flex gap-2">
+                  <FormControl>
+                    <Input
+                      value={wikiSearch}
+                      onChange={(event) => setWikiSearch(event.target.value)}
+                    />
+                  </FormControl>
+                  <Button type="button" onClick={() => void searchWikipedia()}>
+                    Search
+                  </Button>
+                </div>
+              </FormItem>
               <FormField
                 control={form.control}
                 name="scientific_name"
