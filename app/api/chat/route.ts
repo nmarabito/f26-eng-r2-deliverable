@@ -1,7 +1,6 @@
 import { SPECIES_CHAT_FALLBACK, generateResponse } from "@/lib/services/species-chat";
 import { NextResponse } from "next/server";
 
-// post endpoint that accepts a message and returns a response
 export async function POST(request: Request) {
   let body: unknown;
 

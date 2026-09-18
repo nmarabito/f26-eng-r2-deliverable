@@ -19,7 +19,6 @@ export default function SpeciesChatbot() {
 
   const handleSubmit = async () => {
     const trimmedMessage = message.trim();
-
     if (!trimmedMessage || isLoading) {
       return;
     }
@@ -56,6 +55,12 @@ export default function SpeciesChatbot() {
       <TypographyH2>Species Chatbot</TypographyH2>
       <div className="mt-4 flex gap-4">
         <div className="mt-4 rounded-lg bg-foreground p-4 text-background">
+          <TypographyP>
+            The Species Chatbot is a feature that is specialized to answer questions about animals. Ideally, it will be
+            able to provide information on various species, including their habitat, diet, conservation status, and
+            other relevant details. Any unrelated prompts will return a message to the user indicating that the chatbot
+            is specialized for species-related queries only.
+          </TypographyP>
           <TypographyP>
             To use the Species Chatbot, simply type your question in the input field below and hit enter. The chatbot
             will respond with the best available information.
@@ -99,7 +104,7 @@ export default function SpeciesChatbot() {
           <button
             type="button"
             onClick={() => void handleSubmit()}
-            disabled={isLoading || !message.trim()} // disable input while waiting for a response or when there is no message
+            disabled={isLoading || !message.trim()}
             className="mt-2 rounded bg-primary px-4 py-2 text-background transition hover:opacity-90"
           >
             {isLoading ? "Thinking..." : "Enter"}
