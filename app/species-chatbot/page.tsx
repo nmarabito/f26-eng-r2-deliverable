@@ -8,6 +8,7 @@ export default function SpeciesChatbot() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [message, setMessage] = useState("");
   const [chatLog, setChatLog] = useState<{ role: "user" | "bot"; content: string }[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const handleInput = () => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -16,20 +17,50 @@ export default function SpeciesChatbot() {
     }
   };
 
-const handleSubmit = async () => {
-  // TODO: Implement this function
-}
+  const handleSubmit = async () => {
+    const trimmedMessage = message.trim();
 
-return (
+    if (!trimmedMessage || isLoading) {
+      return;
+    }
+
+    setChatLog((previous) => [...previous, { role: "user", content: trimmedMessage }]);
+    setMessage("");
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: trimmedMessage }),
+      });
+      const data = (await response.json()) as { response?: string; error?: string };
+
+      if (!response.ok || !data.response) {
+        throw new Error(data.error ?? "Unable to get a response.");
+      }
+
+      setChatLog((previous) => [...previous, { role: "bot", content: data.response! }]);
+    } catch {
+      setChatLog((previous) => [...previous, { role: "bot", content: "Sorry, I could not process that question." }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
     <>
       <TypographyH2>Species Chatbot</TypographyH2>
       <div className="mt-4 flex gap-4">
         <div className="mt-4 rounded-lg bg-foreground p-4 text-background">
           <TypographyP>
-            The Species Chatbot is a feature to be implemented that is specialized to answer questions about animals.
-            Ideally, it will be able to provide information on various species, including their habitat, diet,
-            conservation status, and other relevant details. Any unrelated prompts will return a message to the user
-            indicating that the chatbot is specialized for species-related queries only.
+            The Species Chatbot is a feature that is specialized to answer questions about animals. Ideally, it will be
+            able to provide information on various species, including their habitat, diet, conservation status, and
+            other relevant details. Any unrelated prompts will return a message to the user indicating that the chatbot
+            is specialized for species-related queries only.
           </TypographyP>
           <TypographyP>
             To use the Species Chatbot, simply type your question in the input field below and hit enter. The chatbot
@@ -66,6 +97,7 @@ return (
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onInput={handleInput}
+            disabled={isLoading}
             rows={1}
             placeholder="Ask about a species..."
             className="w-full resize-none overflow-hidden rounded border border-border bg-background p-2 text-sm text-foreground focus:outline-none"
@@ -73,9 +105,10 @@ return (
           <button
             type="button"
             onClick={() => void handleSubmit()}
+            disabled={isLoading || !message.trim()} // disable input while waiting for a response or when there is no message
             className="mt-2 rounded bg-primary px-4 py-2 text-background transition hover:opacity-90"
           >
-            Enter
+            {isLoading ? "Thinking..." : "Enter"}
           </button>
         </div>
       </div>
