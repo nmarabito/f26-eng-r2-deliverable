@@ -7,7 +7,7 @@ import EditSpecies from "./edit-species-dialogue";
 import SpeciesCard from "./species-card";
 import SpeciesSearch from "./species-search";
 
-export default async function SpeciesList({ searchParams }: { searchParams: { q?: string } }) {
+export default async function SpeciesList({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   // Create supabase server component client and obtain user session from stored cookie
   const supabase = await createServerSupabaseClient();
   const {
@@ -29,7 +29,8 @@ export default async function SpeciesList({ searchParams }: { searchParams: { q?
   const userSpecies = species?.filter((s) => s.author === sessionId) ?? [];
 
   // filter species by substring match (case-insensitive) on scientific name, common name, or description
-  const query = searchParams.q?.toLowerCase() ?? "";
+  const { q } = await searchParams;
+  const query = q?.toLowerCase() ?? "";
   const filteredSpecies =
     species?.filter(
       (s) =>
