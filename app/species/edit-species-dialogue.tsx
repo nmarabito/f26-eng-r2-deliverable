@@ -94,7 +94,7 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
   const handleSelectSpecies = (value: string) => {
     setSelectedId(value);
     const species = userSpecies.find((s) => s.id.toString() === value);
-    
+
     // fill the form with the existing data for the selected species so that user can update it
     if (species) {
       form.reset({
@@ -108,6 +108,8 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
     }
   };
 
+  // i have chosen to include the delete button in the edit-species dialogue because
+  // the editing and deleting processes share a lot of the same logic (e.g. checking if a user created a species)
   const handleDelete = async () => {
     if (!selectedSpecies) {
       return;
@@ -369,9 +371,7 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Delete species</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete {selectedSpecies?.scientific_name}?
-            </DialogDescription>
+            <DialogDescription>Are you sure you want to delete {selectedSpecies?.scientific_name}?</DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="secondary" onClick={() => setDeleteDialogOpen(false)}>
@@ -392,27 +392,26 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
 // 📝 **Add the functionality for users to edit a species’ information.**
 
 //Right now, there is no functionality for users to edit an existing species’ information.
-//  Implement functionality that allows users to edit information of 
-// **species that they have created**. (In other words, this editing 
-// functionality should only be available for species created by the user. 
+//  Implement functionality that allows users to edit information of
+// **species that they have created**. (In other words, this editing
+// functionality should only be available for species created by the user.
 // See hints below!)
 
 //
 //🌟 **Hints:**
-//- `AddSpeciesDialog()` contains a form, so it should be a helpful reference for you 
+//- `AddSpeciesDialog()` contains a form, so it should be a helpful reference for you
 // to adapt to your implementation of editing.
-//**-** `ProfileForm()` in ****`app/settings/profile/profile-form.tsx` should also 
+//**-** `ProfileForm()` in ****`app/settings/profile/profile-form.tsx` should also
 // be a helpful reference for editing.
-//- You should consult the Supabase documentation for guidance on editing existing 
-// entries in the database. 
-//**-** In the `SpeciesList()` component at `app/species/page.tsx`, the ID of the 
-// current logged-in user has already been fetched and stored in a `sessionId` variable. 
-// This will be helpful in determining whether the current user is the author of a given 
+//- You should consult the Supabase documentation for guidance on editing existing
+// entries in the database.
+//**-** In the `SpeciesList()` component at `app/species/page.tsx`, the ID of the
+// current logged-in user has already been fetched and stored in a `sessionId` variable.
+// This will be helpful in determining whether the current user is the author of a given
 // species.
 //- Supabase has already been configured to prevent non-author users from editing species.
 //  So no need to do any Supabase configuration on the backend; you simply need to
-//  hide or disable editing functionality on the frontend for species the user hasn’t 
+//  hide or disable editing functionality on the frontend for species the user hasn’t
 // created!
-//- If needed, you can consult the documentation for React Hook Form and Zod to 
+//- If needed, you can consult the documentation for React Hook Form and Zod to
 // understand how form schema validation has been implemented.
-

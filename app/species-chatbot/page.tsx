@@ -18,7 +18,6 @@ export default function SpeciesChatbot() {
   };
 
   const handleSubmit = async () => {
-
     // remove whitespace
     const trimmedMessage = message.trim();
 
@@ -65,7 +64,7 @@ export default function SpeciesChatbot() {
           </TypographyP>
         </div>
       </div>
-      {/* Chat UI, ChatBot to be implemented */}
+      {/* Chat UI, ChatBot */}
       <div className="mx-auto mt-6">
         {/* Chat history */}
         <div className="h-[400px] space-y-3 overflow-y-auto rounded-lg border border-border bg-muted p-4">
@@ -106,7 +105,7 @@ export default function SpeciesChatbot() {
             disabled={isLoading || !message.trim()}
             className="mt-2 rounded bg-primary px-4 py-2 text-background transition hover:opacity-90"
           >
-            {isLoading ? "Thinking..." : "Enter"} 
+            {isLoading ? "Thinking..." : "Enter"}
             {/* this discourages users from asking new questions while chatbot is generating a response to a previous one */}
           </button>
         </div>

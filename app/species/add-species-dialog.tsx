@@ -112,7 +112,6 @@ export default function AddSpeciesDialog({ userId }: { userId: string }) {
 
     // update the description and image fields
     form.setValue("description", data.extract ?? null);
-    form.setValue("image", data.thumbnail?.source ?? null);
   };
 
   const onSubmit = async (input: FormData) => {
@@ -179,10 +178,7 @@ export default function AddSpeciesDialog({ userId }: { userId: string }) {
                 <FormLabel>Search Wikipedia for your species.</FormLabel>
                 <div className="flex gap-2">
                   <FormControl>
-                    <Input
-                      value={wikiSearch}
-                      onChange={(event) => setWikiSearch(event.target.value)}
-                    />
+                    <Input value={wikiSearch} onChange={(event) => setWikiSearch(event.target.value)} />
                   </FormControl>
                   <Button type="button" onClick={() => void searchWikipedia()}>
                     Search

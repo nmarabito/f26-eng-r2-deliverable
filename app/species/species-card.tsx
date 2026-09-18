@@ -53,7 +53,6 @@ export default function SpeciesCard({ species }: { species: Species }) {
           </DialogClose>
         </DialogContent>
       </Dialog>
-
     </div>
   );
 }

@@ -3,9 +3,9 @@ import { TypographyH2 } from "@/components/ui/typography";
 import { createServerSupabaseClient } from "@/lib/server-utils";
 import { redirect } from "next/navigation";
 import AddSpeciesDialog from "./add-species-dialog";
+import EditSpecies from "./edit-species-dialogue";
 import SpeciesCard from "./species-card";
 import SpeciesSearch from "./species-search";
-import EditSpecies from "./edit-species";
 
 export default async function SpeciesList({ searchParams }: { searchParams: { q?: string } }) {
   // Create supabase server component client and obtain user session from stored cookie
