@@ -94,7 +94,8 @@ export default function SpeciesChatbot() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onInput={handleInput}
-            disabled={isLoading} {/* don't allow inputs while the chatbot is generating a response */}
+            // don't allow inputs while the chatbot is generating a response
+            disabled={isLoading}
             rows={1}
             placeholder="Ask about a species..."
             className="w-full resize-none overflow-hidden rounded border border-border bg-background p-2 text-sm text-foreground focus:outline-none"
@@ -105,7 +106,8 @@ export default function SpeciesChatbot() {
             disabled={isLoading || !message.trim()}
             className="mt-2 rounded bg-primary px-4 py-2 text-background transition hover:opacity-90"
           >
-            {isLoading ? "Thinking..." : "Enter"} {/* this discourages users from asking new questions while chatbot is generating a response to a previous one */}
+            {isLoading ? "Thinking..." : "Enter"} 
+            {/* this discourages users from asking new questions while chatbot is generating a response to a previous one */}
           </button>
         </div>
       </div>

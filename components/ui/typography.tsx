@@ -3,56 +3,66 @@ import React, { type ComponentPropsWithoutRef } from "react";
 
 // https://stackoverflow.com/questions/54654303/using-a-forwardref-component-with-children-in-typescript
 
-export const TypographyH1 = React.forwardRef<HTMLHeadingElement, ComponentPropsWithoutRef<"h1">>(
-  ({ className, ...props }, ref) => (
+export function TypographyH1({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"h1"> & { ref?: React.Ref<HTMLHeadingElement> }) {
+  return (
     <h1
       ref={ref}
       className={cn("scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl", className)}
       {...props}
     />
-  ),
-);
-TypographyH1.displayName = "TypographyH1";
+  );
+}
 
 // Class 'border-b' was removed from the original shadcn/ui element. You can add it back in with a classname at the component level
-export const TypographyH2 = React.forwardRef<HTMLHeadingElement, ComponentPropsWithoutRef<"h2">>(
-  ({ className, ...props }, ref) => (
+export function TypographyH2({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"h2"> & { ref?: React.Ref<HTMLHeadingElement> }) {
+  return (
     <h2
       ref={ref}
       className={cn("scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0", className)}
       {...props}
     />
-  ),
-);
-TypographyH2.displayName = "TypographyH2";
+  );
+}
 
-export const TypographyH3 = React.forwardRef<HTMLHeadingElement, ComponentPropsWithoutRef<"h3">>(
-  ({ className, ...props }, ref) => (
-    <h3 ref={ref} className={cn("scroll-m-20 text-2xl font-semibold tracking-tight", className)} {...props} />
-  ),
-);
-TypographyH3.displayName = "TypographyH3";
+export function TypographyH3({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"h3"> & { ref?: React.Ref<HTMLHeadingElement> }) {
+  return <h3 ref={ref} className={cn("scroll-m-20 text-2xl font-semibold tracking-tight", className)} {...props} />;
+}
 
-export const TypographyH4 = React.forwardRef<HTMLHeadingElement, ComponentPropsWithoutRef<"h4">>(
-  ({ className, ...props }, ref) => (
-    <h4 ref={ref} className={cn("scroll-m-20 text-xl font-semibold tracking-tight", className)} {...props} />
-  ),
-);
-TypographyH4.displayName = "TypographyH4";
+export function TypographyH4({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"h4"> & { ref?: React.Ref<HTMLHeadingElement> }) {
+  return <h4 ref={ref} className={cn("scroll-m-20 text-xl font-semibold tracking-tight", className)} {...props} />;
+}
 
-export const TypographyP = React.forwardRef<HTMLParagraphElement, ComponentPropsWithoutRef<"p">>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn("leading-7 [&:not(:first-child)]:mt-6", className)} {...props} />
-  ),
-);
-TypographyP.displayName = "TypographyP";
+export function TypographyP({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"p"> & { ref?: React.Ref<HTMLParagraphElement> }) {
+  return <p ref={ref} className={cn("leading-7 [&:not(:first-child)]:mt-6", className)} {...props} />;
+}
 
-export const TypographyBlockquote = React.forwardRef<HTMLQuoteElement, ComponentPropsWithoutRef<"blockquote">>(
-  ({ className, ...props }, ref) => (
-    <blockquote ref={ref} className={cn("mt-6 border-l-2 pl-6 italic", className)} {...props} />
-  ),
-);
-TypographyBlockquote.displayName = "TypographyBlockquote";
+export function TypographyBlockquote({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"blockquote"> & { ref?: React.Ref<HTMLQuoteElement> }) {
+  return <blockquote ref={ref} className={cn("mt-6 border-l-2 pl-6 italic", className)} {...props} />;
+}
 
 /* Typing references:
 https://stackoverflow.com/questions/65361696/arguments-of-same-length-typescript
@@ -108,63 +118,80 @@ export function TypographyList({ items }: { items: string[] }) {
   );
 }
 
-export const TypographyInlineCode = React.forwardRef<HTMLElement, ComponentPropsWithoutRef<"code">>(
-  ({ className, ...props }, ref) => (
+export function TypographyInlineCode({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"code"> & { ref?: React.Ref<HTMLElement> }) {
+  return (
     <code
       ref={ref}
       className={cn("relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold", className)}
       {...props}
     />
-  ),
-);
-TypographyInlineCode.displayName = "TypographyInlineCode";
+  );
+}
 
-export const TypographyLead = React.forwardRef<HTMLParagraphElement, ComponentPropsWithoutRef<"p">>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn("text-xl text-muted-foreground", className)} {...props} />
-  ),
-);
-TypographyLead.displayName = "TypographyLead";
+export function TypographyLead({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"p"> & { ref?: React.Ref<HTMLParagraphElement> }) {
+  return <p ref={ref} className={cn("text-xl text-muted-foreground", className)} {...props} />;
+}
 
-export const TypographyLarge = React.forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>(
-  ({ className, ...props }, ref) => <div ref={ref} className={cn("text-lg font-semibold", className)} {...props} />,
-);
-TypographyLarge.displayName = "TypographyLarge";
+export function TypographyLarge({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"div"> & { ref?: React.Ref<HTMLDivElement> }) {
+  return <div ref={ref} className={cn("text-lg font-semibold", className)} {...props} />;
+}
 
-export const TypographySmall = React.forwardRef<HTMLElement, ComponentPropsWithoutRef<"small">>(
-  ({ className, ...props }, ref) => (
-    <small ref={ref} className={cn("text-sm font-medium leading-none", className)} {...props} />
-  ),
-);
-TypographySmall.displayName = "TypographySmall";
+export function TypographySmall({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"small"> & { ref?: React.Ref<HTMLElement> }) {
+  return <small ref={ref} className={cn("text-sm font-medium leading-none", className)} {...props} />;
+}
 
-export const TypographyMuted = React.forwardRef<HTMLParagraphElement, ComponentPropsWithoutRef<"p">>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
-  ),
-);
-TypographyMuted.displayName = "TypographyMuted";
+export function TypographyMuted({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"p"> & { ref?: React.Ref<HTMLParagraphElement> }) {
+  return <p ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />;
+}
 
-export const PageHeader1 = React.forwardRef<HTMLHeadingElement, ComponentPropsWithoutRef<"h2">>(
-  ({ className, ...props }, ref) => (
-    <h2 ref={ref} className={cn("text-2xl font-bold tracking-tight", className)} {...props} />
-  ),
-);
-PageHeader1.displayName = "PageHeader1";
+export function PageHeader1({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"h2"> & { ref?: React.Ref<HTMLHeadingElement> }) {
+  return <h2 ref={ref} className={cn("text-2xl font-bold tracking-tight", className)} {...props} />;
+}
 
-export const PageSubHeader1 = React.forwardRef<HTMLParagraphElement, ComponentPropsWithoutRef<"p">>(
-  ({ className, ...props }, ref) => <p ref={ref} className={cn("text-muted-foreground", className)} {...props} />,
-);
-PageSubHeader1.displayName = "PageSubHeader1";
+export function PageSubHeader1({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"p"> & { ref?: React.Ref<HTMLParagraphElement> }) {
+  return <p ref={ref} className={cn("text-muted-foreground", className)} {...props} />;
+}
 
-export const PageHeader2 = React.forwardRef<HTMLHeadingElement, ComponentPropsWithoutRef<"h3">>(
-  ({ className, ...props }, ref) => <h3 ref={ref} className={cn("text-lg font-medium", className)} {...props} />,
-);
-PageHeader2.displayName = "PageHeader2";
+export function PageHeader2({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"h3"> & { ref?: React.Ref<HTMLHeadingElement> }) {
+  return <h3 ref={ref} className={cn("text-lg font-medium", className)} {...props} />;
+}
 
-export const PageSubHeader2 = React.forwardRef<HTMLParagraphElement, ComponentPropsWithoutRef<"p">>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
-  ),
-);
-PageSubHeader2.displayName = "PageSubHeader2";
+export function PageSubHeader2({
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithoutRef<"p"> & { ref?: React.Ref<HTMLParagraphElement> }) {
+  return <p ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />;
+}

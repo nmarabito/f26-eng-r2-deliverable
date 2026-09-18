@@ -42,7 +42,9 @@ export default async function SpeciesList({ searchParams }: { searchParams: { q?
     <>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
         <TypographyH2>Species List</TypographyH2>
-        <SpeciesSearch />
+        <div className="min-w-[200px] flex-1">
+          <SpeciesSearch />
+        </div>
         <div className="flex gap-4">
           <EditSpecies userSpecies={userSpecies} /> {/* Edit species button */}
           <AddSpeciesDialog userId={sessionId} />

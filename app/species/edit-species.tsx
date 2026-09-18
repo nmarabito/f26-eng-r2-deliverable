@@ -7,6 +7,7 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -81,6 +82,9 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
   const [selectedId, setSelectedId] = useState<string>("");
   const selectedSpecies = userSpecies.find((species) => species.id.toString() === selectedId);
 
+  // control open/closed state of the delete confirmation dialog
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+
   const form = useForm<FormData>({
     resolver: zodResolver(speciesSchema),
     defaultValues,
@@ -102,6 +106,36 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
         description: species.description,
       });
     }
+  };
+
+  const handleDelete = async () => {
+    if (!selectedSpecies) {
+      return;
+    }
+
+    const supabase = createBrowserSupabaseClient();
+    const { error } = await supabase.from("species").delete().eq("id", selectedSpecies.id);
+
+    if (error) {
+      return toast({
+        title: "Something went wrong.",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+
+    setDeleteDialogOpen(false);
+    setOpen(false);
+    setSelectedId("");
+    form.reset(defaultValues);
+
+    // refresh the server-rendered species list to remove the deleted species
+    router.refresh();
+
+    return toast({
+      title: "Species deleted!",
+      description: "Successfully deleted " + selectedSpecies.scientific_name + ".",
+    });
   };
 
   const onSubmit = async (input: FormData) => {
@@ -303,6 +337,16 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
                   }}
                 />
                 <div className="flex">
+                  <Button
+                    type="button"
+                    className="ml-1 mr-1 flex-auto"
+                    variant="destructive"
+                    onClick={() => setDeleteDialogOpen(true)}
+                  >
+                    Delete Species
+                  </Button>
+                </div>
+                <div className="flex">
                   <Button type="submit" className="ml-1 mr-1 flex-auto">
                     Save Changes
                   </Button>
@@ -321,6 +365,24 @@ export default function EditSpecies({ userSpecies }: { userSpecies: Species[] })
           <p className="text-sm text-muted-foreground">You haven&apos;t added any species yet.</p>
         )}
       </DialogContent>
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete species</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete {selectedSpecies?.scientific_name}?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="secondary" onClick={() => setDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={() => void handleDelete()}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Dialog>
   );
 }

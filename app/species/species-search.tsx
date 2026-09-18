@@ -24,7 +24,7 @@ export default function SpeciesSearch() {
       placeholder="Search species..."
       defaultValue={searchParams.get("q") ?? ""}
       onChange={(e) => handleSearch(e.target.value)}
-      className="max-w-sm"
+      className="w-full flex-1"
     />
   );
 }
